@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ desenvolvedor }} | Backend Developer</title>
+  
+  <!-- FontAwesome (Ícones Oficiais) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Swiper CSS (Carrossel) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="container">
+    
+<header class="hero">
+  <!-- Coluna da Esquerda (Texto e Botões) -->
+  <div class="hero-content">
+  <span class="subtitle">{{ foco }}</span>
+  <h1>{{ desenvolvedor }}</h1>
+  <p class="bio">
+    Estudante de Análise e Desenvolvimento de Sistemas focado na construção de APIs RESTful com Python e FastAPI. Experiência com modelagem de banco de dados, POO, git flow e resolução de problemas organizacionais.
+  </p>
+    
+  <div class="social-icons">
+    <a href="{{ github_url }}" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+    <a href="{{ linkedin_url }}" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+    <a href="mailto:{{ email }}" title="Enviar E-mail"><i class="fa-solid fa-envelope"></i></a>
+    <a href="{{ curriculo_url }}" download="curriculo-matheus-goveia.pdf" class="btn-cv"><i class="fa-solid fa-file-pdf"></i> Baixar Currículo</a>
+  </div>
+  </div>
+
+  <!-- Coluna da Direita (Foto de Perfil - FORA do hero-content) -->
+  <div class="hero-image-container">
+    <img src="/static/avatar.jpg" alt="{{ desenvolvedor }}" class="profile-img">
+  </div>
+</header>
+
+    <!-- Seção Projetos -->
+    <section id="projetos">
+      <h2 class="section-title">PROJETOS EM DESTAQUE</h2>
+      <div class="projects-grid">
+        {% for projeto in projetos %}
+        <div class="project-card">
+          <div class="card-img-wrapper">
+            <img src="{{ projeto.imagem_url }}" alt="{{ projeto.titulo }}">
+          </div>
+          <div class="card-body">
+            <h3>{{ projeto.titulo }}</h3>
+            <p>{{ projeto.descricao }}</p>
+            <div class="tags">
+              {% for tech in projeto.tecnologias %}
+              <span class="tag">{{ tech }}</span>
+              {% endfor %}
+            </div>
+            <a href="{{ projeto.link_github }}" target="_blank" class="github-icon-link">
+              <i class="fa-brands fa-github"></i> Ver no GitHub
+            </a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <!-- Seção Habilidades (Com Ícones das Tecnologias) -->
+    <section id="habilidades">
+      <h2 class="section-title">HABILIDADES & FERRAMENTAS</h2>
+      <div class="skills-grid">
+        {% for hab in habilidades %}
+        <div class="skill-item">
+          <i class="{{ hab.icone }}"></i>
+          <div>
+            <strong>{{ hab.nome }}</strong>
+            <small>{{ hab.categoria }}</small>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <!-- Seção Certificados -->
+    <section id="certificados">
+      <h2 class="section-title">CERTIFICAÇÕES</h2>
+      
+      <div class="swiper-container-wrapper">
+        <div class="swiper mySwiper">
+          <div class="swiper-wrapper">
+            {% for cert in certificados %}
+            <div class="swiper-slide">
+              <a href="{{ cert.url }}" target="_blank" class="cert-card">
+                <i class="fa-solid fa-award"></i>
+                <div>
+                  <strong>{{ cert.titulo }}</strong>
+                  <small>{{ cert.instituicao }} • Ver Certificado &rarr;</small>
+                </div>
+              </a>
+            </div>
+            {% endfor %}
+          </div>
+          
+          <div class="swiper-pagination"></div>
+        </div>
+
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+      </div>
+    </section>
+
+    <footer>
+      <p>&copy; {{ desenvolvedor }} • Rio de Janeiro - RJ</p>
+    </footer>
+
+  </div>
+
+  <!-- Swiper JS Script -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+    var swiper = new Swiper(".mySwiper", {
+      slidesPerView: 1,
+      spaceBetween: 20,
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+      breakpoints: {
+        640: {
+          slidesPerView: 2,
+          spaceBetween: 20,
+        },
+        1024: {
+          slidesPerView: 3,
+          spaceBetween: 20,
+        },
+      },
+    });
+  </script>
+</body>
+</html>

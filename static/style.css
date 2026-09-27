@@ -1,0 +1,200 @@
+:root {
+  --bg: #0f1117;
+  --bg-card: #161b22;
+  --text: #f0f6fc;
+  --text-muted: #8b949e;
+  --accent: #38bdf8;
+  --border: #30363d;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+/* Hero Section */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3rem;
+  padding: 4rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-content {
+  flex: 1;
+  max-width: 550px;
+}
+
+.hero-image-container {
+  flex-shrink: 0;
+}
+
+.subtitle { color: var(--accent); text-transform: uppercase; letter-spacing: 2px; font-size: 0.85rem; font-weight: 600; }
+.hero h1 { font-size: 2.8rem; margin: 0.5rem 0 1rem; }
+.bio { color: var(--text-muted); margin-bottom: 2rem; font-size: 1rem; }
+
+.social-icons {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.social-icons a {
+  color: var(--text);
+  font-size: 1.5rem;
+  transition: color 0.2s;
+}
+
+.social-icons a:hover { color: var(--accent); }
+
+.btn-cv {
+  font-size: 0.9rem !important;
+  border: 1px solid var(--border);
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  text-decoration: none;
+  background: var(--bg-card);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.profile-img {
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--border);
+}
+
+/* Sections */
+section { padding: 4rem 0; border-bottom: 1px solid var(--border); }
+.section-title { font-size: 1.1rem; letter-spacing: 2px; margin-bottom: 2rem; color: var(--text-muted); }
+
+/* Projetos */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.8rem;
+}
+
+.project-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.project-card:hover { transform: translateY(-4px); border-color: var(--accent); }
+
+.card-img-wrapper img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-bottom: 1px solid var(--border);
+}
+
+.card-body { padding: 1.2rem; }
+.card-body h3 { font-size: 1.15rem; margin-bottom: 0.5rem; }
+.card-body p { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1rem; }
+
+.tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.tag { background: #21262d; color: var(--accent); font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+.github-icon-link {
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.github-icon-link:hover { color: var(--accent); }
+
+/* Habilidades & Ícones */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.skill-item {
+  background: var(--bg-card);
+  padding: 0.9rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.skill-item i {
+  color: var(--accent);
+  font-size: 1.4rem;
+  width: 25px;
+  text-align: center;
+}
+
+.skill-item small { display: block; color: var(--text-muted); }
+
+/* Swiper / Carrossel de Certificados */
+.swiper-container-wrapper {
+  position: relative;
+  padding: 0 45px;
+}
+
+.swiper {
+  width: 100%;
+  padding-bottom: 2.5rem !important;
+}
+
+.swiper-slide {
+  height: auto;
+}
+
+.cert-card {
+  height: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 1rem;
+  border-radius: 6px;
+  text-decoration: none;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.cert-card:hover { border-color: var(--accent); }
+.cert-card i { color: var(--accent); font-size: 1.3rem; }
+.cert-card small { display: block; color: var(--text-muted); margin-top: 0.2rem; }
+
+.swiper-button-next, .swiper-button-prev {
+  color: var(--accent) !important;
+  transform: scale(0.55);
+  top: 45% !important;
+}
+
+.swiper-button-prev { left: -5px !important; }
+.swiper-button-next { right: -5px !important; }
+
+.swiper-pagination-bullet { background: var(--text-muted) !important; }
+.swiper-pagination-bullet-active { background: var(--accent) !important; }
+
+footer { text-align: center; color: var(--text-muted); padding: 2rem 0; font-size: 0.85rem; }
