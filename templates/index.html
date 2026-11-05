@@ -2,144 +2,220 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ desenvolvedor }} | Backend Developer</title>
-  
-  <!-- FontAwesome (Ícones Oficiais) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <!-- Swiper CSS (Carrossel) -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-  
-  <link rel="stylesheet" href="/static/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ perfil.nome }} | Portfólio</title>
+  <meta name="description" content="{{ perfil.nome }}, estudante de Análise e Desenvolvimento de Sistemas. Projetos em Python e APIs, currículo e contato.">
+  <meta name="theme-color" content="#0a0e16">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ perfil.nome }} | Portfólio">
+  <meta property="og:description" content="{{ perfil.headline }} {{ perfil.resumo }}">
+  <meta property="og:image" content="/static/avatar.jpg">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234cc2ff'/%3E%3Ctext x='32' y='42' font-family='Arial' font-weight='700' font-size='28' text-anchor='middle' fill='%2304121f'%3EMG%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/static/style.css?v=2">
 </head>
 <body>
-  <div class="container">
-    
-<header class="hero">
-  <!-- Coluna da Esquerda (Texto e Botões) -->
-  <div class="hero-content">
-  <span class="subtitle">{{ foco }}</span>
-  <h1>{{ desenvolvedor }}</h1>
-  <p class="bio">
-    Estudante de Análise e Desenvolvimento de Sistemas focado na construção de APIs RESTful com Python e FastAPI. Experiência com modelagem de banco de dados, POO, git flow e resolução de problemas organizacionais.
-  </p>
-    
-  <div class="social-icons">
-    <a href="{{ github_url }}" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
-    <a href="{{ linkedin_url }}" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
-    <a href="mailto:{{ email }}" title="Enviar E-mail"><i class="fa-solid fa-envelope"></i></a>
-    <a href="{{ curriculo_url }}" download="curriculo-matheus-goveia.pdf" class="btn-cv"><i class="fa-solid fa-file-pdf"></i> Baixar Currículo</a>
-  </div>
-  </div>
+  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
 
-  <!-- Coluna da Direita (Foto de Perfil - FORA do hero-content) -->
-  <div class="hero-image-container">
-    <img src="/static/avatar.jpg" alt="{{ desenvolvedor }}" class="profile-img">
-  </div>
-</header>
+  <header class="site-header">
+    <div class="container bar">
+      <a class="brand" href="#topo" aria-label="{{ perfil.nome }}, início">
+        <span class="brand-mark">MG</span>
+        <span class="brand-name">{{ perfil.nome }}</span>
+      </a>
+      <nav class="nav" aria-label="Seções do site">
+        <a href="#projetos">Projetos</a>
+        <a href="#trajetoria">Trajetória</a>
+        <a href="#habilidades">Habilidades</a>
+        <a href="#contato">Contato</a>
+      </nav>
+    </div>
+  </header>
 
-    <!-- Seção Projetos -->
-    <section id="projetos">
-      <h2 class="section-title">PROJETOS EM DESTAQUE</h2>
-      <div class="projects-grid">
-        {% for projeto in projetos %}
-        <div class="project-card">
-          <div class="card-img-wrapper">
-            <img src="{{ projeto.imagem_url }}" alt="{{ projeto.titulo }}">
+  <main id="conteudo">
+    <!-- Apresentação -->
+    <section class="hero" id="topo">
+      <div class="container hero-grid">
+        <div class="hero-text">
+          <p class="badge"><span class="dot" aria-hidden="true"></span>{{ perfil.status }}</p>
+          <h1>{{ perfil.nome }}</h1>
+          <p class="headline">{{ perfil.headline }}</p>
+          <p class="lead">{{ perfil.resumo }}</p>
+
+          <div class="cta-row">
+            <a class="btn btn-primary" href="#projetos">Ver projetos</a>
+            <a class="btn btn-ghost" href="{{ perfil.curriculo_url }}" download="curriculo-matheus-goveia.pdf">{{ icon('download') }} Baixar currículo</a>
           </div>
-          <div class="card-body">
-            <h3>{{ projeto.titulo }}</h3>
-            <p>{{ projeto.descricao }}</p>
-            <div class="tags">
-              {% for tech in projeto.tecnologias %}
-              <span class="tag">{{ tech }}</span>
+
+          <ul class="social" aria-label="Links de contato">
+            <li><a href="{{ perfil.github_url }}" target="_blank" rel="noopener" aria-label="GitHub">{{ icon('github') }}</a></li>
+            <li><a href="{{ perfil.linkedin_url }}" target="_blank" rel="noopener" aria-label="LinkedIn">{{ icon('linkedin') }}</a></li>
+            <li><a href="mailto:{{ perfil.email }}" aria-label="Enviar e-mail">{{ icon('envelope') }}</a></li>
+            <li class="where">{{ icon('location-dot') }} {{ perfil.localizacao }}</li>
+          </ul>
+        </div>
+
+        <div class="hero-photo">
+          <img src="/static/avatar.jpg" alt="Ilustração de {{ perfil.nome }}" width="320" height="320" decoding="async">
+        </div>
+      </div>
+    </section>
+
+    <!-- Projetos -->
+    <section class="section" id="projetos">
+      <div class="container">
+        <div class="section-head">
+          <h2>Projetos</h2>
+          <p>O que eu construí e por que construí.</p>
+        </div>
+
+        {% if destaque %}
+        <article class="featured">
+          <div class="featured-media">
+            <img src="{{ destaque.imagem }}" alt="Captura de tela do {{ destaque.titulo }} ao lado do jogo" width="1100" height="744" loading="lazy" decoding="async">
+          </div>
+          <div class="featured-body">
+            <p class="kicker">Projeto em destaque</p>
+            <h3>{{ destaque.titulo }}</h3>
+            <p class="muted">{{ destaque.descricao }}</p>
+            <ul class="points">
+              {% for ponto in destaque.pontos %}
+              <li>{{ icon('check') }}<span>{{ ponto }}</span></li>
               {% endfor %}
+            </ul>
+            <ul class="tags" aria-label="Tecnologias">
+              {% for tech in destaque.tecnologias %}<li>{{ tech }}</li>{% endfor %}
+            </ul>
+            <div class="cta-row">
+              {% if destaque.link_extra %}
+              <a class="btn btn-primary" href="{{ destaque.link_extra }}" target="_blank" rel="noopener">{{ icon('download') }} {{ destaque.rotulo_extra }}</a>
+              {% endif %}
+              <a class="btn btn-ghost" href="{{ destaque.link_github }}" target="_blank" rel="noopener">{{ icon('github') }} Código no GitHub</a>
             </div>
-            <a href="{{ projeto.link_github }}" target="_blank" class="github-icon-link">
-              <i class="fa-brands fa-github"></i> Ver no GitHub
-            </a>
+            {% if destaque.aviso %}<p class="note">{{ destaque.aviso }}</p>{% endif %}
           </div>
+        </article>
+        {% endif %}
+
+        <div class="cards">
+          {% for p in outros_projetos %}
+          <article class="card">
+            <div class="card-icon">{{ icon(p.icone) }}</div>
+            <h3>{{ p.titulo }}</h3>
+            <p class="muted">{{ p.descricao }}</p>
+            <ul class="tags" aria-label="Tecnologias">
+              {% for tech in p.tecnologias %}<li>{{ tech }}</li>{% endfor %}
+            </ul>
+            <div class="card-links">
+              <a href="{{ p.link_github }}" target="_blank" rel="noopener">{{ icon('github') }} Código</a>
+              {% if p.link_extra %}
+              <a href="{{ p.link_extra }}"{% if p.link_extra.startswith('http') %} target="_blank" rel="noopener"{% endif %}>{{ icon('arrow-up-right-from-square') }} {{ p.rotulo_extra }}</a>
+              {% endif %}
+            </div>
+          </article>
+          {% endfor %}
         </div>
-        {% endfor %}
       </div>
     </section>
 
-    <!-- Seção Habilidades (Com Ícones das Tecnologias) -->
-    <section id="habilidades">
-      <h2 class="section-title">HABILIDADES & FERRAMENTAS</h2>
-      <div class="skills-grid">
-        {% for hab in habilidades %}
-        <div class="skill-item">
-          <i class="{{ hab.icone }}"></i>
+    <!-- Formação e experiência -->
+    <section class="section" id="trajetoria">
+      <div class="container">
+        <div class="section-head">
+          <h2>Trajetória</h2>
+          <p>Formação e experiência.</p>
+        </div>
+        <div class="two-col">
+          {% for tipo, rotulo, ic in [('formacao', 'Formação', 'graduation-cap'), ('trabalho', 'Experiência', 'briefcase')] %}
           <div>
-            <strong>{{ hab.nome }}</strong>
-            <small>{{ hab.categoria }}</small>
+            <h3 class="sub">{{ icon(ic) }} {{ rotulo }}</h3>
+            <ol class="timeline">
+              {% for e in experiencias if e.tipo == tipo %}
+              <li>
+                <p class="when">{{ e.periodo }}</p>
+                <h4>{{ e.titulo }}</h4>
+                <p class="org">{{ e.organizacao }}</p>
+                {% if e.descricao %}
+                <ul class="details-list">
+                  {% for linha in e.descricao %}<li>{{ linha }}</li>{% endfor %}
+                </ul>
+                {% endif %}
+              </li>
+              {% endfor %}
+            </ol>
           </div>
+          {% endfor %}
         </div>
-        {% endfor %}
       </div>
     </section>
 
-    <!-- Seção Certificados -->
-    <section id="certificados">
-      <h2 class="section-title">CERTIFICAÇÕES</h2>
-      
-      <div class="swiper-container-wrapper">
-        <div class="swiper mySwiper">
-          <div class="swiper-wrapper">
-            {% for cert in certificados %}
-            <div class="swiper-slide">
-              <a href="{{ cert.url }}" target="_blank" class="cert-card">
-                <i class="fa-solid fa-award"></i>
-                <div>
-                  <strong>{{ cert.titulo }}</strong>
-                  <small>{{ cert.instituicao }} • Ver Certificado &rarr;</small>
-                </div>
-              </a>
-            </div>
+    <!-- Habilidades -->
+    <section class="section" id="habilidades">
+      <div class="container">
+        <div class="section-head">
+          <h2>Habilidades</h2>
+          <p>O que eu uso nos meus projetos.</p>
+        </div>
+        <div class="groups">
+          {% for g in habilidades %}
+          <div class="group">
+            <h3>{{ icon(g.icone) }} {{ g.categoria }}</h3>
+            <ul class="chips">
+              {% for item in g.itens %}<li>{{ item }}</li>{% endfor %}
+            </ul>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+
+    <!-- Certificados -->
+    <section class="section" id="certificados">
+      <div class="container">
+        <div class="section-head">
+          <h2>Certificados</h2>
+          <p>Cursos concluídos na Alura. Cada um abre o certificado original.</p>
+        </div>
+
+        <ul class="cert-grid">
+          {% for c in certificados_destaque %}
+          <li><a class="cert" href="{{ c.url }}" target="_blank" rel="noopener">{{ icon('award') }}<span><strong>{{ c.titulo }}</strong><small>{{ c.instituicao }} · ver certificado</small></span></a></li>
+          {% endfor %}
+        </ul>
+
+        {% if certificados_outros %}
+        <details class="more">
+          <summary><span class="when-closed">Ver todos os {{ total_certificados }} certificados</span><span class="when-open">Mostrar menos</span></summary>
+          <ul class="cert-grid">
+            {% for c in certificados_outros %}
+            <li><a class="cert" href="{{ c.url }}" target="_blank" rel="noopener">{{ icon('award') }}<span><strong>{{ c.titulo }}</strong><small>{{ c.instituicao }} · ver certificado</small></span></a></li>
             {% endfor %}
-          </div>
-          
-          <div class="swiper-pagination"></div>
-        </div>
-
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div>
+          </ul>
+        </details>
+        {% endif %}
       </div>
     </section>
 
-    <footer>
-      <p>&copy; {{ desenvolvedor }} • Rio de Janeiro - RJ</p>
-    </footer>
+    <!-- Contato -->
+    <section class="section" id="contato">
+      <div class="container">
+        <div class="contact-card">
+          <h2>Vamos conversar?</h2>
+          <p class="muted">Se você tem uma vaga de estágio ou quer trocar uma ideia sobre algum projeto, é só chamar.</p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="mailto:{{ perfil.email }}">{{ icon('envelope') }} {{ perfil.email }}</a>
+            <a class="btn btn-ghost" href="{{ perfil.linkedin_url }}" target="_blank" rel="noopener">{{ icon('linkedin') }} LinkedIn</a>
+            <a class="btn btn-ghost" href="{{ perfil.github_url }}" target="_blank" rel="noopener">{{ icon('github') }} GitHub</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
-  </div>
-
-  <!-- Swiper JS Script -->
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-  <script>
-    var swiper = new Swiper(".mySwiper", {
-      slidesPerView: 1,
-      spaceBetween: 20,
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-      },
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-      },
-      breakpoints: {
-        640: {
-          slidesPerView: 2,
-          spaceBetween: 20,
-        },
-        1024: {
-          slidesPerView: 3,
-          spaceBetween: 20,
-        },
-      },
-    });
-  </script>
+  <footer class="site-footer">
+    <div class="container">
+      <p>© {{ perfil.nome }} · {{ perfil.localizacao }}</p>
+      <p>Feito com FastAPI e Jinja2 · <a href="/docs">API</a> · Ícones: Font Awesome Free (CC BY 4.0)</p>
+    </div>
+  </footer>
 </body>
 </html>
